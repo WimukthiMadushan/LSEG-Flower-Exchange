@@ -62,7 +62,7 @@ void OrderBook::printOrderBook(const std::string& instrument) const {
 }
 
 
-void OrderBook::processOrder(Order order) {
+void OrderBook::processOrder(Order& order) {
 
     if (isMatchingOrder(order)) {
         matchOrder(order);
@@ -101,6 +101,15 @@ void OrderBook::matchOrder(Order& order) {
 
                 int tradedQty = std::min(order.quantity, it->quantity);
 
+                // Track the filled sell order
+                FilledOrder filled;
+                filled.orderId = it->orderId;
+                filled.clientOrderId = it->clientOrderId;
+                filled.price = it->price;
+                filled.quantity = tradedQty;
+                filled.side = 2;  // Sell side
+                filledOrders.push_back(filled);
+
                 order.quantity -= tradedQty;
                 it->quantity -= tradedQty;
 
@@ -124,6 +133,15 @@ void OrderBook::matchOrder(Order& order) {
             if (it->price >= order.price) {
 
                 int tradedQty = std::min(order.quantity, it->quantity);
+
+                // Track the filled buy order
+                FilledOrder filled;
+                filled.orderId = it->orderId;
+                filled.clientOrderId = it->clientOrderId;
+                filled.price = it->price;
+                filled.quantity = tradedQty;
+                filled.side = 1;  // Buy side
+                filledOrders.push_back(filled);
 
                 order.quantity -= tradedQty;
                 it->quantity -= tradedQty;
