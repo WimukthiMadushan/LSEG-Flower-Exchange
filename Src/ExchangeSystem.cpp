@@ -79,8 +79,9 @@ void ExchangeSystem::readFile(const string& filePath) {
             
             orderBooks[order.instrument].processOrder(order);
 
-            // Generate Fill reports for matched orders (counter-party fills)
+            // For each fill (counterparty)
             for (const auto& filled : orderBooks[order.instrument].filledOrders) {
+                // Report for resting order (already done)
                 ExecutionReport fillReport;
                 fillReport.orderId = filled.orderId;
                 fillReport.clientOrderId = filled.clientOrderId;
@@ -92,27 +93,36 @@ void ExchangeSystem::readFile(const string& filePath) {
                 fillReport.reason = "";
                 fillReport.timestamp = getTimestamp();
                 reports.push_back(fillReport);
+
+                // Report for incoming order (aggressor)
+                ExecutionReport aggressorReport;
+                aggressorReport.orderId = order.orderId;
+                aggressorReport.clientOrderId = order.clientOrderId;
+                aggressorReport.instrument = order.instrument;
+                aggressorReport.side = order.side;
+                aggressorReport.price = filled.price; // Use resting order's price
+                aggressorReport.quantity = filled.quantity;
+                aggressorReport.status = (order.quantity == 0) ? 2 : 3; // Fill or Pfill
+                aggressorReport.reason = "";
+                aggressorReport.timestamp = getTimestamp();
+                reports.push_back(aggressorReport);
             }
 
-            // Create report for incoming order
-            ExecutionReport r;
-            r.orderId = order.orderId;
-            r.clientOrderId = order.clientOrderId;
-            r.instrument = order.instrument;
-            r.side = order.side;
-            r.price = order.price;
-            r.quantity = originalQuantity;
-            
-            // Determine status: Fill if fully matched, New if added to book
-            if (order.quantity == 0) {
-                r.status = 2;  // Fill - fully matched
-            } else {
-                r.status = 0;  // New - partially or not matched
+            // If any quantity remains, report as "New"
+            if (order.quantity > 0 && order.quantity == originalQuantity) {
+                ExecutionReport newReport;
+                newReport.orderId = order.orderId;
+                newReport.clientOrderId = order.clientOrderId;
+                newReport.instrument = order.instrument;
+                newReport.side = order.side;
+                newReport.price = order.price;
+                newReport.quantity = order.quantity;
+                newReport.status = 0; // New
+                newReport.reason = "";
+                newReport.timestamp = getTimestamp();
+                reports.push_back(newReport);
             }
-            
-            r.timestamp = getTimestamp();
 
-            reports.push_back(r);
         }
     }
 
