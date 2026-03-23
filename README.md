@@ -1,11 +1,18 @@
+
 # Flower Exchange System (C++)
+
+<a href="https://isocpp.org/"><img src="https://img.shields.io/badge/C++-00599C?style=flat&logo=c%2B%2B&logoColor=white"/></a>
+<a href="https://cmake.org/"><img src="https://img.shields.io/badge/CMake-064F8C?style=flat&logo=cmake&logoColor=white"/></a>
+<a href="https://github.com/WimukthiMadushan/LSEG-Flower-Exchange/actions"><img src="https://github.com/WimukthiMadushan/LSEG-Flower-Exchange/actions/workflows/cmake-multi-platform.yml/badge.svg" alt="Build Status"/></a>
+<a href="https://code.visualstudio.com/"><img src="https://img.shields.io/badge/VS%20Code-007ACC?style=flat&logo=visual-studio-code&logoColor=white"/></a>
+
 
 ## Overview
 
 This project implements a simplified **Flower Trading Exchange System**, similar to a stock exchange matching engine.
 
 The system reads buy and sell orders from a CSV file, processes them using an **order matching engine**, and generates execution reports.
-
+> Developed as the finale project of the C++ workshop series conducted by LSEG.
 ---
 
 ## System Architecture
