@@ -11,13 +11,13 @@ void OrderBook::printOrderBook(const std::string& instrument) const {
     std::cout << "=============================\n";
 
     std::cout << std::left
-              << std::setw(10) << "OrderID"
+              << std::setw(12) << "OrderID"
               << std::setw(10) << "Qty"
-              << std::setw(10) << "Price"
+              << std::setw(12) << "Price"
               << " | "
-              << std::setw(10) << "Price"
+              << std::setw(12) << "Price"
               << std::setw(10) << "Qty"
-              << std::setw(10) << "OrderID"
+              << std::setw(12) << "OrderID"
               << "\n";
 
     std::cout << "-----------------------------------------------------------\n";
@@ -28,31 +28,29 @@ void OrderBook::printOrderBook(const std::string& instrument) const {
 
         // BUY SIDE (highest price first)
         if (buyIt != buySide.orders.end()) {
-            std::cout << std::left
-                      << std::setw(10) << buyIt->orderId
-                      << std::setw(10) << buyIt->quantity
-                      << std::setw(10) << std::fixed << std::setprecision(2) << buyIt->price;
+            std::cout << std::left << std::setw(12) << buyIt->orderId;
+            std::cout << std::right << std::setw(10) << buyIt->quantity;
+            std::cout << std::right << std::setw(12) << std::fixed << std::setprecision(2) << buyIt->price;
             ++buyIt;
         } else {
-            std::cout << std::setw(10) << ""
+            std::cout << std::setw(12) << ""
                       << std::setw(10) << ""
-                      << std::setw(10) << "";
+                      << std::setw(12) << "";
         }
 
         std::cout << " | ";
 
         // SELL SIDE (lowest price first)
         if (sellIt != sellSide.orders.end()) {
-            std::cout << std::right
-                      << std::setw(10) << std::fixed << std::setprecision(2) << sellIt->price
-                      << std::left
-                      << std::setw(10) << sellIt->quantity
-                      << std::setw(10) << sellIt->orderId;
+            std::cout << std::setfill(' ');
+            std::cout << std::right << std::setw(12) << std::fixed << std::setprecision(2) << sellIt->price;
+            std::cout << std::right << std::setw(10) << sellIt->quantity;
+            std::cout << std::left << std::setw(12) << sellIt->orderId;
             ++sellIt;
         } else {
-            std::cout << std::setw(10) << ""
+            std::cout << std::setw(12) << ""
                       << std::setw(10) << ""
-                      << std::setw(10) << "";
+                      << std::setw(12) << "";
         }
 
         std::cout << "\n";
@@ -165,17 +163,21 @@ void OrderBook::addOrder(const Order& order) {
     if (order.side == 1) {
         buySide.orders.push_back(order);
 
-        // Sort BUY: highest price first
+        // Sort BUY: highest price first, then by time priority (earlier orders first)
         buySide.orders.sort([](const Order& a, const Order& b) {
-            return a.price > b.price;
+            if (a.price != b.price)
+                return a.price > b.price;  // Descending by price (highest first)
+            return a.sequence < b.sequence;  // FIFO for same price
         });
 
     } else {
         sellSide.orders.push_back(order);
 
-        // Sort SELL: lowest price first
+        // Sort SELL: lowest price first, then by time priority (earlier orders first)
         sellSide.orders.sort([](const Order& a, const Order& b) {
-            return a.price < b.price;
+            if (a.price != b.price)
+                return a.price < b.price;  // Ascending by price (lowest first)
+            return a.sequence < b.sequence;  // FIFO for same price
         });
     }
 }

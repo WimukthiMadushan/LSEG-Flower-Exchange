@@ -51,6 +51,7 @@ void ExchangeSystem::readFile(const string& filePath) {
             order.side          = stoi(row[2]);
             order.quantity      = stoi(row[3]);
             order.price         = stod(row[4]);
+            order.sequence      = ++orderSequence;    // Assign time priority
 
             string reason;
 
