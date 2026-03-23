@@ -13,13 +13,16 @@ int main() {
     chrono::steady_clock::time_point start = chrono::steady_clock::now();
     
     exchange.readFile("../Data/order.csv");
-    for (auto it = exchange.orderBooks.begin(); it != exchange.orderBooks.end(); ++it) {
-        it->second.printOrderBook(it->first);
-    }
+
     exchange.writeReports("../Data/execution_report.csv");
 
     chrono::steady_clock::time_point end = chrono::steady_clock::now();
-    auto duration = chrono::duration_cast<chrono::milliseconds>(end - start);
-    cout << "\n Processing Completed in " << duration.count() << " ms\n";
+    
+    for (auto it = exchange.orderBooks.begin(); it != exchange.orderBooks.end(); ++it) {
+        it->second.printOrderBook(it->first);
+    }
+
+    auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
+    cout << "\n Processing Completed in " << duration.count() << " us\n";
     return 0;
 }
