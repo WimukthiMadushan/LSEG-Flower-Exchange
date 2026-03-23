@@ -1,12 +1,13 @@
 #include "../Include/ExchangeSystem.h"
 #include "../Include/Order.h"
+#include "../Include/Utils.h"
 
 #include <fstream>
 #include <sstream>
 #include <vector>
 #include <iostream>
-#include <chrono>
 #include <iomanip>
+#include <chrono>
 
 using namespace std;
 
@@ -45,7 +46,7 @@ void ExchangeSystem::readFile(const string& filePath) {
         if (row.size() >= 5) {
 
             Order order;
-            order.orderId       = generateOrderId();  // Generate order ID first
+            order.orderId       = Utils::generateOrderId();  // Generate order ID first
             order.clientOrderId = row[0];
             order.instrument    = row[1];
             order.side          = stoi(row[2]);
@@ -66,7 +67,7 @@ void ExchangeSystem::readFile(const string& filePath) {
                 r.quantity = order.quantity;
                 r.status = 1; // Rejected
                 r.reason = reason;
-                r.timestamp = getTimestamp();
+                r.timestamp = Utils::getTimestamp();
 
                 reports.push_back(r);
                 continue;
@@ -91,7 +92,7 @@ void ExchangeSystem::readFile(const string& filePath) {
                 fillReport.quantity = filled.quantity;
                 fillReport.status = 2;  // Fill
                 fillReport.reason = "";
-                fillReport.timestamp = getTimestamp();
+                fillReport.timestamp = Utils::getTimestamp();
                 reports.push_back(fillReport);
 
                 // Report for incoming order (aggressor)
@@ -104,7 +105,7 @@ void ExchangeSystem::readFile(const string& filePath) {
                 aggressorReport.quantity = filled.quantity;
                 aggressorReport.status = (order.quantity == 0) ? 2 : 3; // Fill or Pfill
                 aggressorReport.reason = "";
-                aggressorReport.timestamp = getTimestamp();
+                aggressorReport.timestamp = Utils::getTimestamp();
                 reports.push_back(aggressorReport);
             }
 
@@ -119,7 +120,7 @@ void ExchangeSystem::readFile(const string& filePath) {
                 newReport.quantity = order.quantity;
                 newReport.status = 0; // New
                 newReport.reason = "";
-                newReport.timestamp = getTimestamp();
+                newReport.timestamp = Utils::getTimestamp();
                 reports.push_back(newReport);
             }
 
@@ -159,26 +160,7 @@ bool ExchangeSystem::validateOrder(const Order& o, string& reason) {
     return true;
 }
 
-string ExchangeSystem::generateOrderId() {
-    static int counter = 1;
-    return "ord" + to_string(counter++);
-}
 
-string ExchangeSystem::getTimestamp() {
-
-    auto now = chrono::system_clock::now();
-    auto time = chrono::system_clock::to_time_t(now);
-
-    tm* tm_ptr = localtime(&time);
-
-    char buffer[32];
-    strftime(buffer, sizeof(buffer), "%Y%m%d-%H%M%S", tm_ptr);
-
-    return string(buffer);
-}
-
-
-#include <iomanip>   // ADD THIS
 
 void ExchangeSystem::writeReports(const string& filePath) {
 

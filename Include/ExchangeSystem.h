@@ -19,6 +19,4 @@ public:
 
 private:
     bool validateOrder(const Order& order, string& reason);
-    string generateOrderId();
-    string getTimestamp();
 };
