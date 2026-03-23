@@ -1,6 +1,7 @@
 #include "../Include/ExchangeSystem.h"
 #include "../Include/Order.h"
 #include "../Include/Utils.h"
+#include "../Include/ExecutionReport.h"
 
 #include <fstream>
 #include <sstream>
@@ -16,16 +17,7 @@ void ExchangeSystem::processOrders(const std::vector<Order>& orders) {
         order.sequence = ++orderSequence; // Assign time priority
         std::string reason;
         if (!Utils::validateOrder(order, reason)) {
-            ExecutionReport r;
-            r.orderId = order.orderId;
-            r.clientOrderId = order.clientOrderId;
-            r.instrument = order.instrument;
-            r.side = order.side;
-            r.price = order.price;
-            r.quantity = order.quantity;
-            r.status = 1; // Rejected
-            r.reason = reason;
-            r.timestamp = Utils::getTimestamp();
+            ExecutionReport r = ExecutionReport::createRejectReport(order, order.instrument, reason);
             reports.push_back(r);
             continue;
         }
@@ -33,42 +25,11 @@ void ExchangeSystem::processOrders(const std::vector<Order>& orders) {
         orderBooks[order.instrument].clearFilledOrders();
         orderBooks[order.instrument].processOrder(order);
         for (const auto& filled : orderBooks[order.instrument].filledOrders) {
-            ExecutionReport fillReport;
-            fillReport.orderId = filled.orderId;
-            fillReport.clientOrderId = filled.clientOrderId;
-            fillReport.instrument = order.instrument;
-            fillReport.side = filled.side;
-            fillReport.price = filled.price;
-            fillReport.quantity = filled.quantity;
-            fillReport.status = 2;  // Fill
-            fillReport.reason = "";
-            fillReport.timestamp = Utils::getTimestamp();
-            reports.push_back(fillReport);
-
-            ExecutionReport aggressorReport;
-            aggressorReport.orderId = order.orderId;
-            aggressorReport.clientOrderId = order.clientOrderId;
-            aggressorReport.instrument = order.instrument;
-            aggressorReport.side = order.side;
-            aggressorReport.price = filled.price; // Use resting order's price
-            aggressorReport.quantity = filled.quantity;
-            aggressorReport.status = (order.quantity == 0) ? 2 : 3; // Fill or Pfill
-            aggressorReport.reason = "";
-            aggressorReport.timestamp = Utils::getTimestamp();
-            reports.push_back(aggressorReport);
+            reports.push_back(ExecutionReport::createFillReport(filled, order.instrument, filled.side, filled.price, filled.quantity));
+            reports.push_back(ExecutionReport::createAggressorReport(order, order.instrument, filled.price, filled.quantity, (order.quantity == 0) ? 2 : 3));
         }
         if (order.quantity > 0 && order.quantity == originalQuantity) {
-            ExecutionReport newReport;
-            newReport.orderId = order.orderId;
-            newReport.clientOrderId = order.clientOrderId;
-            newReport.instrument = order.instrument;
-            newReport.side = order.side;
-            newReport.price = order.price;
-            newReport.quantity = order.quantity;
-            newReport.status = 0; // New
-            newReport.reason = "";
-            newReport.timestamp = Utils::getTimestamp();
-            reports.push_back(newReport);
+            reports.push_back(ExecutionReport::createNewReport(order, order.instrument));
         }
     }
 }
