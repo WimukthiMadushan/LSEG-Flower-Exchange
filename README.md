@@ -1,11 +1,18 @@
+
 # Flower Exchange System (C++)
+
+<a href="https://isocpp.org/"><img src="https://img.shields.io/badge/C++-00599C?style=flat&logo=c%2B%2B&logoColor=white"/></a>
+<a href="https://cmake.org/"><img src="https://img.shields.io/badge/CMake-064F8C?style=flat&logo=cmake&logoColor=white"/></a>
+<a href="https://github.com/features/actions"><img src="https://img.shields.io/badge/GitHub%20Actions-2088FF?style=flat&logo=githubactions&logoColor=white" alt="GitHub Actions"/></a>
+<a href="https://code.visualstudio.com/"><img src="https://img.shields.io/badge/VS%20Code-007ACC?style=flat&logo=visual-studio-code&logoColor=white"/></a>
+
 
 ## Overview
 
 This project implements a simplified **Flower Trading Exchange System**, similar to a stock exchange matching engine.
 
 The system reads buy and sell orders from a CSV file, processes them using an **order matching engine**, and generates execution reports.
-
+> Developed as the finale project of the C++ workshop series conducted by LSEG.
 ---
 
 ## System Architecture
@@ -151,6 +158,50 @@ Write execution_rep.csv
 
 ---
 
+
+---
+
+## 🛠️ How to Compile & Run
+
+### Prerequisites
+
+- **C++ Compiler** (e.g., GCC, Clang, or MSVC)
+- **CMake** (version 3.10 or higher recommended)
+
+### Build Steps
+
+1. **Clone or download this repository.**
+2. **Open a terminal and navigate to the project root directory.**
+3. **Create a build directory:**
+  ```sh
+  mkdir build
+  cd build
+  ```
+4. **Run CMake to generate build files:**
+  ```sh
+  cmake ..
+  ```
+5. **Build the project:**
+  ```sh
+  cmake --build .
+  ```
+
+### Running the Program
+
+After building, an executable (e.g., `LSEG_Flower_Exchange.exe` on Windows) will be created in the `build` directory.
+
+To run the program:
+
+```sh
+./LSEG_Flower_Exchange.exe
+```
+
+Make sure your input file (e.g., `orders.csv`) is in the correct location as expected by the program.
+
+The output (e.g., `execution_rep.csv`) will be generated in the appropriate directory after execution.
+
+---
+
 ## 🚀 Key Highlights
 
 * Simulates real-world trading systems
@@ -163,7 +214,7 @@ Write execution_rep.csv
 
 ## 👥 Contributors
 
-* Your Name
-* Partner Name
+* [Wimukthi Madushan](https://github.com/WimukthiMadushan)
+* [Akindu Delgahagoda](https://github.com/AkinduID)
 
 ---
