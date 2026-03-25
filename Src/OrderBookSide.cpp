@@ -25,16 +25,3 @@ void OrderBookSide::insertOrder(const Order& order, bool isBuySide) {
         });
     }
 }
-
-// void OrderBookSide::deleteOrder(const Order& order) {
-//     orders.remove(order); // uses operator==
-// }
-
-// Order* OrderBookSide::getTopOrder() {
-
-//     if (orders.empty())
-//         return nullptr;
-
-//     return &orders.front();
-// }
-
