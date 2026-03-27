@@ -39,7 +39,7 @@ std::vector<Order> FileHandler::readOrdersFromFile(const std::string& filePath) 
 
 void FileHandler::writeReportsToFile(const std::string& filePath, const std::vector<ExecutionReport>& reports) {
 	std::ofstream file(filePath);
-	file << "Order ID,Client Order ID,Instrument,Side,Exec Status,Quantity,Price,Transaction Time\n";
+	file << "Order ID,Client Order ID,Instrument,Side,Exec Status,Quantity,Price,Reason,Transaction Time\n";
 	for (const auto& r : reports) {
 		file << r.orderId << ","
 			 << r.clientOrderId << ","
@@ -48,6 +48,7 @@ void FileHandler::writeReportsToFile(const std::string& filePath, const std::vec
 			 << Utils::getStatusText(r.status) << ","
 			 << r.quantity << ","
 			 << std::fixed << std::setprecision(2) << r.price << ","
+			 << r.reason << ","
 			 << r.timestamp << "\n";
 	}
 	file.close();
