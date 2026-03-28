@@ -15,25 +15,25 @@ public:
     std::string orderId;           ///< System-generated order ID
     std::string clientOrderId;     ///< Client-supplied order ID
     std::string instrument;        ///< Instrument/flower type
-    int side;                      ///< 1 = Buy, 2 = Sell
+    OrderSide side;                ///< Order side (Buy/Sell)
     double price;                  ///< Execution price
     int quantity;                  ///< Executed quantity
-    int status;                    ///< 0 New, 1 Reject, 2 Fill, 3 Pfill
+    OrderStatus status;            ///< Order status (New, Rejected, Fill, Pfill)
     std::string reason;            ///< Reason for rejection or status
     std::string timestamp;         ///< Transaction time
 
     /**
      * @brief Create a fill report for a resting order.
      */
-    static ExecutionReport createFillReport(const Order& restingOrder, const std::string& instrument, int side, double price, int quantity);
+    static ExecutionReport createFillReport(const Order& restingOrder, const std::string& instrument, OrderSide side, double price, int quantity);
     /**
      * @brief Create a fill report for a filled order.
      */
-    static ExecutionReport createFillReport(const FilledOrder& filledOrder, const std::string& instrument, int side, double price, int quantity);
+    static ExecutionReport createFillReport(const FilledOrder& filledOrder, const std::string& instrument, OrderSide side, double price, int quantity);
     /**
      * @brief Create an aggressor report for an incoming order.
      */
-    static ExecutionReport createAggressorReport(const Order& incomingOrder, const std::string& instrument, double price, int quantity, int status);
+    static ExecutionReport createAggressorReport(const Order& incomingOrder, const std::string& instrument, double price, int quantity, OrderStatus status);
     /**
      * @brief Create a new order report.
      */

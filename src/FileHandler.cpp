@@ -26,7 +26,8 @@ std::vector<Order> FileHandler::readOrdersFromFile(const std::string& filePath) 
 			order.orderId       = Utils::generateOrderId();
 			order.clientOrderId = row[0];
 			order.instrument    = row[1];
-			order.side          = std::stoi(row[2]);
+			int sideInt         = std::stoi(row[2]);
+			order.side          = (sideInt == 1) ? OrderSide::Buy : OrderSide::Sell;
 			order.quantity      = std::stoi(row[3]);
 			order.price         = std::stod(row[4]);
 			// sequence should be set by ExchangeSystem
@@ -44,8 +45,8 @@ void FileHandler::writeReportsToFile(const std::string& filePath, const std::vec
 		file << r.orderId << ","
 			 << r.clientOrderId << ","
 			 << r.instrument << ","
-			 << r.side << ","
-			 << Utils::getStatusText(r.status) << ","
+			 << (r.side == OrderSide::Buy ? 1 : 2) << ","
+			 << Utils::getStatusText((r.status)) << ","
 			 << r.quantity << ","
 			 << std::fixed << std::setprecision(2) << r.price << ","
 			 << r.reason << ","

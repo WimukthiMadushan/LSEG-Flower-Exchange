@@ -8,12 +8,12 @@
 
 namespace Utils {
 
-std::string getStatusText(int status) {
+std::string getStatusText(OrderStatus status) {
     switch (status) {
-        case 0: return "New";
-        case 1: return "Rejected";
-        case 2: return "Fill";
-        case 3: return "Pfill";
+        case OrderStatus::New: return "New";
+        case OrderStatus::Rejected: return "Rejected";
+        case OrderStatus::Fill: return "Fill";
+        case OrderStatus::Pfill: return "Pfill";
         default: return "Unknown";
     }
 }
@@ -39,12 +39,11 @@ bool validateOrder(const Order& o, string& reason) {
         o.instrument != "Lotus" &&
         o.instrument != "Tulip" &&
         o.instrument != "Orchid") {
-
         reason = "Invalid Instrument";
         return false;
-        }
+    }
 
-    if (o.side != 1 && o.side != 2) {
+    if (o.side != OrderSide::Buy && o.side != OrderSide::Sell) {
         reason = "Invalid Side";
         return false;
     }

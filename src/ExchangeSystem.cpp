@@ -26,7 +26,7 @@ void ExchangeSystem::processOrders(const std::vector<Order>& orders) {
         orderBooks[order.instrument].processOrder(order);
         for (const auto& filled : orderBooks[order.instrument].filledOrders) {
             reports.push_back(ExecutionReport::createFillReport(filled, order.instrument, filled.side, filled.price, filled.quantity));
-            reports.push_back(ExecutionReport::createAggressorReport(order, order.instrument, filled.price, filled.quantity, (order.quantity == 0) ? 2 : 3));
+            reports.push_back(ExecutionReport::createAggressorReport(order, order.instrument, filled.price, filled.quantity, (order.quantity == 0) ? OrderStatus::Fill : OrderStatus::Pfill));
         }
         if (order.quantity > 0 && order.quantity == originalQuantity) {
             reports.push_back(ExecutionReport::createNewReport(order, order.instrument));

@@ -10,10 +10,10 @@ namespace Utils {
 
     /**
      * @brief Get the status text for an execution status code.
-     * @param status Status code (0=New, 1=Rejected, 2=Fill, 3=Pfill).
+     * @param status Status code (OrderStatus enum).
      * @return Status as a string.
      */
-    std::string getStatusText(int status);
+    std::string getStatusText(OrderStatus status);
 
     /**
      * @brief Get the current timestamp as a string.

@@ -15,7 +15,7 @@ struct FilledOrder {
     std::string clientOrderId;  ///< Client order ID
     double price;               ///< Fill price
     int quantity;               ///< Fill quantity
-    int side;                   ///< 1 = Buy, 2 = Sell
+    OrderSide side;                   ///< 1 = Buy, 2 = Sell
 };
 
 /**

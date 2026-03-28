@@ -10,7 +10,7 @@ TEST(OrderBookTest, AddOrderAndMatch) {
     OrderBook ob;
     Order buyOrder;
     buyOrder.orderId = "b1";
-    buyOrder.side = 1;
+    buyOrder.side = OrderSide::Buy;
     buyOrder.price = 100;
     buyOrder.quantity = 50;
     buyOrder.sequence = 1;
@@ -18,7 +18,7 @@ TEST(OrderBookTest, AddOrderAndMatch) {
     EXPECT_EQ(ob.buySide.orders.size(), 1);
     Order sellOrder;
     sellOrder.orderId = "s1";
-    sellOrder.side = 2;
+    sellOrder.side = OrderSide::Sell;
     sellOrder.price = 100;
     sellOrder.quantity = 50;
     sellOrder.sequence = 2;

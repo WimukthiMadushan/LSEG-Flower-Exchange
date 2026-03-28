@@ -74,7 +74,7 @@ void OrderBook::processOrder(Order& order) {
 
 bool OrderBook::isMatchingOrder(const Order& order) {
 
-    if (order.side == 1) { // BUY
+    if (order.side == OrderSide::Buy) { // BUY
         for (const auto& sell : sellSide.orders) {
             if (sell.price <= order.price)
                 return true;
@@ -91,7 +91,7 @@ bool OrderBook::isMatchingOrder(const Order& order) {
 
 void OrderBook::matchOrder(Order& order) {
 
-    if (order.side == 1) { // BUY
+    if (order.side == OrderSide::Buy) { // BUY
         for (auto it = sellSide.orders.begin(); it != sellSide.orders.end();) {
             if (it->price <= order.price) {
                 
@@ -103,7 +103,7 @@ void OrderBook::matchOrder(Order& order) {
                 filled.clientOrderId = it->clientOrderId;
                 filled.price = it->price;
                 filled.quantity = tradedQty;
-                filled.side = 2;  // Sell side
+                filled.side = OrderSide::Sell;  // Sell side
                 filledOrders.push_back(filled);
 
                 order.quantity -= tradedQty;
@@ -134,7 +134,7 @@ void OrderBook::matchOrder(Order& order) {
                 filled.clientOrderId = it->clientOrderId;
                 filled.price = it->price;
                 filled.quantity = tradedQty;
-                filled.side = 1;  // Buy side
+                filled.side = OrderSide::Buy;  // Buy side
                 filledOrders.push_back(filled);
 
                 order.quantity -= tradedQty;
@@ -156,7 +156,7 @@ void OrderBook::matchOrder(Order& order) {
 
 void OrderBook::addOrder(const Order& order) {
 
-    if (order.side == 1) {
+    if (order.side == OrderSide::Buy) {
         buySide.insertOrder(order, true);
 
     } else {
