@@ -5,19 +5,32 @@
 
 using namespace std;
 
+/**
+ * @class Order
+ * @brief Represents a single order in the exchange.
+ */
 class Order {
 public:
-    string orderId;           // System-generated order ID
-    string clientOrderId;
-    string instrument;
-    int side{};        // 1 = Buy, 2 = Sell
-    double price{};
-    int quantity{};
-    long long sequence{};      // Time priority (FIFO) - order of arrival
+    string orderId;           ///< System-generated order ID
+    string clientOrderId;     ///< Client-supplied order ID
+    string instrument;        ///< Instrument/flower type
+    int side{};               ///< 1 = Buy, 2 = Sell
+    double price{};           ///< Order price
+    int quantity{};           ///< Order quantity
+    long long sequence{};     ///< Time priority (FIFO) - order of arrival
 
+    /**
+     * @brief Default constructor.
+     */
     Order() = default;
+    /**
+     * @brief Parameterized constructor.
+     */
     Order(string id, string inst, int s, double p, int q);
 
+    /**
+     * @brief Equality operator for orders.
+     */
     bool operator==(const Order& other) const;
 };
 
