@@ -1,18 +1,13 @@
-// Struct for raw input order (from CSV)
-// struct InputOrder {
-//     std::string clientOrderId;
-//     std::string instrument;
-//     int side; // raw side value from CSV
-//     int quantity;
-//     double price;
-// };
 #ifndef LSEG_FLOWER_EXCHANGE_ORDER_H
 #define LSEG_FLOWER_EXCHANGE_ORDER_H
 
 #include <string>
 
 using namespace std;
-// Struct for raw input order (from CSV)
+/**
+ * @struct InputOrder
+ * @brief Structure to track input orders.
+ */
 struct InputOrder {
     std::string clientOrderId;
     std::string instrument;
