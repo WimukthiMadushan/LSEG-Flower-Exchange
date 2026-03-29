@@ -20,5 +20,5 @@ public:
      * @brief Process a list of orders, updating order books and generating reports.
      * @param orders Vector of orders to process.
      */
-    void processOrders(const std::vector<Order>& orders);
+    void processOrders(const std::vector<InputOrder>& InputOrders);
 };
