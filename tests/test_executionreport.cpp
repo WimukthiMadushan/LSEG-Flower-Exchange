@@ -13,7 +13,7 @@ TEST(ExecutionReportTest, CreateNewReport) {
     EXPECT_EQ(report.orderId, "ord1");
     EXPECT_EQ(report.clientOrderId, "cl1");
     EXPECT_EQ(report.instrument, "Rose");
-    EXPECT_EQ(report.side, OrderSide::Buy);
+    EXPECT_EQ(report.side, static_cast<int>(OrderSide::Buy));
     EXPECT_EQ(report.price, 10.5);
     EXPECT_EQ(report.quantity, 100);
     EXPECT_EQ(report.status, OrderStatus::New);
