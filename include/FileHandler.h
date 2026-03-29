@@ -21,5 +21,6 @@ public:
 	 * @param filePath Path to the output CSV file.
 	 * @param reports Vector of execution reports.
 	 */
-	static void writeReportsToFile(const std::string& filePath, const std::vector<ExecutionReport>& reports);
+	static void writeReportsToFile(const std::string& filePath, 
+		const std::vector<ExecutionReport>& reports);
 };

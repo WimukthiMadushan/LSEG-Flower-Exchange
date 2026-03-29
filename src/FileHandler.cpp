@@ -36,9 +36,13 @@ std::vector<InputOrder> FileHandler::readOrdersFromFile(const std::string& fileP
 	return orders;
 }
 
-void FileHandler::writeReportsToFile(const std::string& filePath, const std::vector<ExecutionReport>& reports) {
+void FileHandler::writeReportsToFile(const std::string& filePath, 
+	const std::vector<ExecutionReport>& reports) {
+
 	std::ofstream file(filePath);
-	file << "Order ID,Client Order ID,Instrument,Side,Exec Status,Quantity,Price,Reason,Transaction Time\n";
+	file << 
+	"Order ID,Client Order ID,Instrument,Side,Exec Status,Quantity,Price,Reason,Transaction Time\n";
+	
 	for (const auto& r : reports) {
 		file << r.orderId << ","
 			 << r.clientOrderId << ","

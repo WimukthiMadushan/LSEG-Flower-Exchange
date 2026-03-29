@@ -28,7 +28,9 @@ TEST(FileHandlerTest, WriteReportsToFile) {
     std::ifstream file("test_report.csv");
     std::string line;
     std::getline(file, line);
-    EXPECT_EQ(line, "Order ID,Client Order ID,Instrument,Side,Exec Status,Quantity,Price,Transaction Time");
+    EXPECT_EQ(line, 
+        "Order ID,Client Order ID,Instrument,Side,Exec Status,Quantity,Price,Transaction Time");
+    
     std::getline(file, line);
     EXPECT_NE(line.find("ord1"), std::string::npos);
     file.close();

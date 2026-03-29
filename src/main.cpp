@@ -17,7 +17,9 @@ int main(int argc, char* argv[]) {
     std::string input_path = argv[1];
     // Extract filename from input_path
     size_t last_slash = input_path.find_last_of("/\\");
-    std::string filename = (last_slash == std::string::npos) ? input_path : input_path.substr(last_slash + 1);
+    std::string filename = (last_slash == std::string::npos) ? input_path : 
+        input_path.substr(last_slash + 1);
+
     // Remove .csv extension if present
     size_t dot = filename.rfind(".csv");
     if (dot != std::string::npos)

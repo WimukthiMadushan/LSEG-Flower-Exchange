@@ -7,7 +7,9 @@
 #include "../include/ExecutionReport.h"
 
 
-ExecutionReport ExecutionReport::createFillReport(const FilledOrder& filledOrder, const std::string& instrument, OrderSide side, double price, int quantity) {
+ExecutionReport ExecutionReport::createFillReport(const FilledOrder& filledOrder, 
+	const std::string& instrument, OrderSide side, double price, int quantity) {
+		
 	ExecutionReport r;
 	r.orderId = filledOrder.orderId;
 	r.clientOrderId = filledOrder.clientOrderId;
@@ -22,7 +24,9 @@ ExecutionReport ExecutionReport::createFillReport(const FilledOrder& filledOrder
 }
 
 
-ExecutionReport ExecutionReport::createFillReport(const Order& restingOrder, const std::string& instrument, OrderSide side, double price, int quantity) {
+ExecutionReport ExecutionReport::createFillReport(const Order& restingOrder, 
+	const std::string& instrument, OrderSide side, double price, int quantity) {
+
 	ExecutionReport r;
 	r.orderId = restingOrder.orderId;
 	r.clientOrderId = restingOrder.clientOrderId;
@@ -37,7 +41,9 @@ ExecutionReport ExecutionReport::createFillReport(const Order& restingOrder, con
 }
 
 
-ExecutionReport ExecutionReport::createAggressorReport(const Order& incomingOrder, const std::string& instrument, double price, int quantity, OrderStatus status) {
+ExecutionReport ExecutionReport::createAggressorReport(const Order& incomingOrder, 
+	const std::string& instrument, double price, int quantity, OrderStatus status) {
+
 	ExecutionReport r;
 	r.orderId = incomingOrder.orderId;
 	r.clientOrderId = incomingOrder.clientOrderId;
@@ -52,7 +58,9 @@ ExecutionReport ExecutionReport::createAggressorReport(const Order& incomingOrde
 }
 
 
-ExecutionReport ExecutionReport::createNewReport(const Order& order, const std::string& instrument) {
+ExecutionReport ExecutionReport::createNewReport(const Order& order, 
+	const std::string& instrument) {
+
 	ExecutionReport r;
 	r.orderId = order.orderId;
 	r.clientOrderId = order.clientOrderId;
@@ -67,7 +75,9 @@ ExecutionReport ExecutionReport::createNewReport(const Order& order, const std::
 }
 
 
-ExecutionReport ExecutionReport::createRejectReport(const Order& order, const InputOrder& inputOrder, const std::string& instrument, const std::string& reason) {
+ExecutionReport ExecutionReport::createRejectReport(const Order& order, 
+	const InputOrder& inputOrder, const std::string& instrument, const std::string& reason) {
+
 	ExecutionReport r;
 	r.orderId = order.orderId;
 	r.clientOrderId = order.clientOrderId;

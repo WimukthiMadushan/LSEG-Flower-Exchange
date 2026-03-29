@@ -25,15 +25,21 @@ public:
     /**
      * @brief Create a fill report for a resting order.
      */
-    static ExecutionReport createFillReport(const Order& restingOrder, const std::string& instrument, OrderSide side, double price, int quantity);
+    static ExecutionReport createFillReport(const Order& restingOrder, 
+        const std::string& instrument, OrderSide side, double price, int quantity);
+
     /**
      * @brief Create a fill report for a filled order.
      */
-    static ExecutionReport createFillReport(const FilledOrder& filledOrder, const std::string& instrument, OrderSide side, double price, int quantity);
+    static ExecutionReport createFillReport(const FilledOrder& filledOrder, 
+        const std::string& instrument, OrderSide side, double price, int quantity);
+
     /**
      * @brief Create an aggressor report for an incoming order.
      */
-    static ExecutionReport createAggressorReport(const Order& incomingOrder, const std::string& instrument, double price, int quantity, OrderStatus status);
+    static ExecutionReport createAggressorReport(const Order& incomingOrder, 
+        const std::string& instrument, double price, int quantity, OrderStatus status);
+
     /**
      * @brief Create a new order report.
      */
@@ -41,7 +47,8 @@ public:
     /**
      * @brief Create a reject report for an order.
      */
-    static ExecutionReport createRejectReport(const Order& order,const InputOrder& inputOrder, const std::string& instrument, const std::string& reason);
+    static ExecutionReport createRejectReport(const Order& order,
+        const InputOrder& inputOrder, const std::string& instrument, const std::string& reason);
 };
 
 #endif

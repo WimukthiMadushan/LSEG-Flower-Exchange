@@ -30,7 +30,9 @@ void OrderBook::printOrderBook(const std::string& instrument) const {
         if (buyIt != buySide.orders.end()) {
             std::cout << std::left << std::setw(12) << buyIt->orderId;
             std::cout << std::right << std::setw(10) << buyIt->quantity;
-            std::cout << std::right << std::setw(12) << std::fixed << std::setprecision(2) << buyIt->price;
+            std::cout << std::right << std::setw(12) << std::fixed << std::setprecision(2) 
+                << buyIt->price;
+
             ++buyIt;
         } else {
             std::cout << std::setw(12) << ""
@@ -43,7 +45,9 @@ void OrderBook::printOrderBook(const std::string& instrument) const {
         // SELL SIDE (lowest price first)
         if (sellIt != sellSide.orders.end()) {
             std::cout << std::setfill(' ');
-            std::cout << std::right << std::setw(12) << std::fixed << std::setprecision(2) << sellIt->price;
+            std::cout << std::right << std::setw(12) << std::fixed << std::setprecision(2) 
+                << sellIt->price;
+
             std::cout << std::right << std::setw(10) << sellIt->quantity;
             std::cout << std::left << std::setw(12) << sellIt->orderId;
             ++sellIt;

@@ -21,8 +21,9 @@ struct InputOrder {
     double price;
 
     InputOrder() = default;
-        InputOrder(const std::string& clientOrderId_, const std::string& instrument_, int side_, double price_, int quantity_)
-            : clientOrderId(clientOrderId_), instrument(instrument_), side(side_), quantity(quantity_), price(price_) {}
+        InputOrder(const std::string& clientOrderId_, const std::string& instrument_, int side_, 
+            double price_, int quantity_) : clientOrderId(clientOrderId_), instrument(instrument_), 
+            side(side_), quantity(quantity_), price(price_) {}
 };
 /**
  * @enum OrderSide
