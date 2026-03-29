@@ -1,10 +1,29 @@
+// Struct for raw input order (from CSV)
+// struct InputOrder {
+//     std::string clientOrderId;
+//     std::string instrument;
+//     int side; // raw side value from CSV
+//     int quantity;
+//     double price;
+// };
 #ifndef LSEG_FLOWER_EXCHANGE_ORDER_H
 #define LSEG_FLOWER_EXCHANGE_ORDER_H
 
 #include <string>
 
 using namespace std;
+// Struct for raw input order (from CSV)
+struct InputOrder {
+    std::string clientOrderId;
+    std::string instrument;
+    int side; // raw side value from CSV
+    int quantity;
+    double price;
 
+    InputOrder() = default;
+        InputOrder(const std::string& clientOrderId_, const std::string& instrument_, int side_, double price_, int quantity_)
+            : clientOrderId(clientOrderId_), instrument(instrument_), side(side_), quantity(quantity_), price(price_) {}
+};
 /**
  * @enum OrderSide
  * @brief Enum for order side (Buy/Sell)
