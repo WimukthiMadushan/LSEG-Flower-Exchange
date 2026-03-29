@@ -6,7 +6,23 @@ import sys
 INPUT_DIR = os.path.join('tests', 'integration_test', 'input')
 OUTPUT_DIR = os.path.join('data', 'output')
 VALIDATE_DIR = os.path.join('tests', 'integration_test', 'validate')
-APP_EXECUTABLE = os.path.join('build', 'LSEG_Flower_Exchange.exe') if os.name == 'nt' else os.path.join('build', 'LSEG_Flower_Exchange')
+
+# On Windows, check both build/ and build/Release/ for the executable
+if os.name == 'nt':
+    exe_candidates = [
+        os.path.join('build', 'LSEG_Flower_Exchange.exe'),
+        os.path.join('build', 'Release', 'LSEG_Flower_Exchange.exe'),
+    ]
+    APP_EXECUTABLE = None
+    for candidate in exe_candidates:
+        if os.path.exists(candidate):
+            APP_EXECUTABLE = candidate
+            break
+    if APP_EXECUTABLE is None:
+        # Default to build/Release/ for CI, even if not found (will error later)
+        APP_EXECUTABLE = exe_candidates[-1]
+else:
+    APP_EXECUTABLE = os.path.join('build', 'LSEG_Flower_Exchange')
 
 
 def run_application(order_file, output_file):
