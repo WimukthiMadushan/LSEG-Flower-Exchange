@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
 
     ExchangeSystem exchange;
     chrono::steady_clock::time_point start = chrono::steady_clock::now();
-    std::vector<Order> orders = FileHandler::readOrdersFromFile(input_path);
+    std::vector<InputOrder> orders = FileHandler::readOrdersFromFile(input_path);
     exchange.processOrders(orders);
     FileHandler::writeReportsToFile(output_path, exchange.reports);
     chrono::steady_clock::time_point end = chrono::steady_clock::now();
