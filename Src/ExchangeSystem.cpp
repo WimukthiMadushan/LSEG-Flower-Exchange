@@ -12,10 +12,10 @@
 
 using namespace std;
 
-void ExchangeSystem::processOrders(const std::vector<Order>& orders) {
+void ExchangeSystem::processOrders(const vector<Order>& orders) {
     for (auto order : orders) {
         order.sequence = ++orderSequence; // Assign time priority
-        std::string reason;
+        string reason;
         if (!Utils::validateOrder(order, reason)) {
             ExecutionReport r = ExecutionReport::createRejectReport(order, order.instrument, reason);
             reports.push_back(r);

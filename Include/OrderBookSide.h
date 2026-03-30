@@ -2,17 +2,18 @@
 #define LSEG_FLOWER_EXCHANGE_ORDERBOOKSIDE_H
 
 #include <list>
+#include <map>
+
 #include "Order.h"
 
 using namespace std;
 
 class OrderBookSide {
 public:
-    list<Order> orders;
+    // price -> list of orders (FIFO at each price level)
+    map<double, list<Order>> orders;
 
     void insertOrder(const Order& order, bool isBuySide);
-    void deleteOrder(const Order& order);
-    Order* getTopOrder();
 };
 
 #endif // LSEG_FLOWER_EXCHANGE_ORDERBOOKSIDE_H
