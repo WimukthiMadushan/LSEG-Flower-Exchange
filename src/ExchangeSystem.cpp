@@ -1,7 +1,7 @@
-#include "../Include/ExchangeSystem.h"
-#include "../Include/Order.h"
-#include "../Include/Utils.h"
-#include "../Include/ExecutionReport.h"
+#include "../include/ExchangeSystem.h"
+#include "../include/Order.h"
+#include "../include/Utils.h"
+#include "../include/ExecutionReport.h"
 
 #include <fstream>
 #include <sstream>
@@ -30,7 +30,7 @@ void ExchangeSystem::processOrders(const vector<InputOrder>& inputOrders) {
         for (const auto& filled : orderBooks[order.instrument].filledOrders) {
             reports.push_back(ExecutionReport::createFillReport(filled, order.instrument, 
                 filled.side, filled.price, filled.quantity));
-                
+
             reports.push_back(ExecutionReport::createAggressorReport(order, order.instrument, 
                 filled.price, filled.quantity, (order.quantity == 0) ? OrderStatus::Fill : 
                 OrderStatus::Pfill));
