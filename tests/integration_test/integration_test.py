@@ -10,13 +10,13 @@ VALIDATE_DIR = os.path.join('tests', 'integration_test', 'validate')
 # Cross-platform: check for the executable in all common locations
 if os.name == 'nt':
     exe_candidates = [
-        os.path.join('build', 'LSEG_Flower_Exchange.exe'),
-        os.path.join('build', 'Release', 'LSEG_Flower_Exchange.exe'),
+        os.path.abspath(os.path.join('build', 'LSEG_Flower_Exchange.exe')),
+        os.path.abspath(os.path.join('build', 'Release', 'LSEG_Flower_Exchange.exe')),
     ]
 else:
     exe_candidates = [
-        os.path.join('build', 'LSEG_Flower_Exchange'),
-        os.path.join('build', 'Release', 'LSEG_Flower_Exchange'),
+        os.path.abspath(os.path.join('build', 'LSEG_Flower_Exchange')),
+        os.path.abspath(os.path.join('build', 'Release', 'LSEG_Flower_Exchange')),
     ]
 APP_EXECUTABLE = None
 for candidate in exe_candidates:
