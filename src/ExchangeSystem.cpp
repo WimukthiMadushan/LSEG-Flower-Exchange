@@ -12,15 +12,13 @@
 
 using namespace std;
 
-void ExchangeSystem::processOrders(const vector<InputOrder>& inputOrders) {
-    for (auto inputOrder : inputOrders) {
+void ExchangeSystem::processOrders(const std::vector<InputOrder>& inputOrders) {
+    for (const auto& inputOrder : inputOrders) {
         Order order = Utils::convertInputOrderToOrder(inputOrder, Utils::generateOrderId());
         order.sequence = ++orderSequence; // Assign time priority
         string reason;
         if (!Utils::validateOrder(order, reason)) {
-            ExecutionReport r = ExecutionReport::createRejectReport(order,inputOrder, 
-                order.instrument, reason);
-
+            ExecutionReport r = ExecutionReport::createRejectReport(order, inputOrder, order.instrument, reason);
             reports.push_back(r);
             continue;
         }
@@ -28,12 +26,8 @@ void ExchangeSystem::processOrders(const vector<InputOrder>& inputOrders) {
         orderBooks[order.instrument].clearFilledOrders();
         orderBooks[order.instrument].processOrder(order);
         for (const auto& filled : orderBooks[order.instrument].filledOrders) {
-            reports.push_back(ExecutionReport::createFillReport(filled, order.instrument, 
-                filled.side, filled.price, filled.quantity));
-
-            reports.push_back(ExecutionReport::createAggressorReport(order, order.instrument, 
-                filled.price, filled.quantity, (order.quantity == 0) ? OrderStatus::Fill : 
-                OrderStatus::Pfill));
+            reports.push_back(ExecutionReport::createFillReport(filled, order.instrument, filled.side, filled.price, filled.quantity));
+            reports.push_back(ExecutionReport::createAggressorReport(order, order.instrument, filled.price, filled.quantity, (order.quantity == 0) ? OrderStatus::Fill : OrderStatus::Pfill));
         }
         if (order.quantity > 0 && order.quantity == originalQuantity) {
             reports.push_back(ExecutionReport::createNewReport(order, order.instrument));
